@@ -5,14 +5,20 @@ public class Relflections {
 
     public static void main(String[] args) throws Exception {
         TestReflectionClass t1 = new TestReflectionClass(1, "daniel", 545896578);
-        TestReflectionClass t2 = new TestReflectionClass(1, "daniel", 65);
+        TestReflectionClass t2 = new TestReflectionClass(-1, "dan", 65);
         try {
             //printDeclares(t1);
             // printMethods(t1);
             // printMethod(t1);
-            isEquals(t1, t2);
-            //fill(t1, t2);
-            // System.out.println(t2);
+            //isEquals(t1, t2);
+            int i = 0;
+            long srart = System.currentTimeMillis();
+            while(i<10000){
+            fill(t1, t2);
+            i++;
+            }
+        System.out.println((System.currentTimeMillis() - srart) / 1000.0);
+           // System.out.println(t2);
         } catch (SecurityException e) {
             System.err.println(e);
         }
@@ -25,7 +31,8 @@ public class Relflections {
         for (int i = 0; i < fieldsSrc.length; i++) {
             if (fieldsSrc[i].getName().equals(fieldsDest[i].getName())) {
                 fieldsSrc[i].setAccessible(true);
-                fieldsSrc[i].set(dest, fieldsSrc[i].get(src));
+                fieldsDest[i].setAccessible(true);
+                fieldsDest[i].set(dest, fieldsSrc[i].get(src));
             }
         }
     }
